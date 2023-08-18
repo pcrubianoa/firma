@@ -8,9 +8,10 @@ export default function TabOneScreen() {
   const { signOut, user } = useAuth();
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Página principal</Text>
+      <Text style={styles.title}>Esperando documento para firmar</Text>
+      <Text style={styles.subtitle}>Envia el documento a firmar desde Logis</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+
       <Text onPress={() => signOut()}>Salir</Text>
 
     </View>
@@ -26,6 +27,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  subtitle: {
+    fontSize: 15,
+    marginVertical: 20,
   },
   separator: {
     marginVertical: 30,

@@ -2,7 +2,6 @@ import { useRootNavigation, useRouter, useSegments } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
 import { appwrite } from "../lib/appwrite-service";
 import { Models } from "appwrite";
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Define the AuthContextValue interface
@@ -85,16 +84,19 @@ export function Provider(props: ProviderProps) {
   useEffect(() => {
     (async () => {
       try {
-        const user = await appwrite.account.get();
+        //const user = await appwrite.account.get();
+        const user = await getData('user');
         console.log(user);
         setAuth(user);
+        setAuthInitialized(true);
+        console.log("initialize ", user);
       } catch (error) {
         console.log("error", error);
         setAuth(null);
       }
 
-      setAuthInitialized(true);
-      console.log("initialize ", user);
+      // setAuthInitialized(true);
+      // console.log("initialize ", user);
     })();
   }, []);
 
@@ -106,7 +108,7 @@ export function Provider(props: ProviderProps) {
     try {
       //const response = await appwrite.account.deleteSession("current");
       removeData('user');
-      return { error: undefined, data: response };
+      return { error: undefined, data: true };
     } catch (error) {
       return { error, data: undefined };
     } finally {
@@ -152,7 +154,7 @@ export function Provider(props: ProviderProps) {
       //   password
       // );
 
-      const user = await getData();
+      const user = await getData('user');
       setAuth(user);
       return { data: user, error: undefined };
     } catch (error) {
@@ -236,9 +238,9 @@ const storeData = async (value: any) => {
   }
 };
 
-const getData = async () => {
+const getData = async (key:any) => {
   try {
-    const jsonValue = await AsyncStorage.getItem('user');
+    const jsonValue = await AsyncStorage.getItem(key);
     return jsonValue != null ? JSON.parse(jsonValue) : null;
   } catch (e) {
     // error reading value

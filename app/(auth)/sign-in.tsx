@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Image
 } from "react-native";
 import { useAuth } from "../context/auth";
 import { Stack, useRouter } from "expo-router";
@@ -19,6 +20,8 @@ export default function SignIn() {
     <>
       <Stack.Screen options={{ title: "sign up", headerShown: false }} />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Image source={require('../../assets/images/logo.png')}
+       style={{width: 155, height: 70}} />
         <View style={{ marginTop: 32 }}>
           <Text
             style={{ fontWeight: "500", fontSize: 20 }}
@@ -39,7 +42,7 @@ export default function SignIn() {
           <Text style={styles.label}>Usuario</Text>
           <TextInput
             placeholder="usuario.empresa"
-            placeholderTextColor="gray"
+            placeholderTextColor="lightgray"
             autoCapitalize="none"
             nativeID="email"
             onChangeText={(text) => {
@@ -52,7 +55,7 @@ export default function SignIn() {
           <Text style={styles.label}>Contraseña</Text>
           <TextInput
             placeholder="contraseña"
-            placeholderTextColor="gray"
+            placeholderTextColor="lightgray"
             secureTextEntry={true}
             nativeID="password"
             onChangeText={(text) => {
@@ -84,7 +87,7 @@ export default function SignIn() {
             style={{ fontWeight: "500" }}
             onPress={() => router.push("/sign-up")}
           >
-            Logis ERP 2023
+            © Logis ERP 2023
           </Text>
         </View>
       </View>
@@ -95,19 +98,19 @@ export default function SignIn() {
 const styles = StyleSheet.create({
   label: {
     marginBottom: 4,
-    color: "#455fff",
+    color: "#1973e7",
   },
   textInput: {
     width: 250,
     borderWidth: 1,
     borderRadius: 4,
-    borderColor: "#455fff",
+    borderColor: "#1973e7",
     paddingHorizontal: 8,
     paddingVertical: 4,
     marginBottom: 16,
   },
   button: {
-    backgroundColor: "blue",
+    backgroundColor: "#1973e7",
     padding: 10,
     width: 250,
     borderRadius: 5,
@@ -117,5 +120,9 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     fontSize: 16,
+  },
+  logo: {
+    width: 50,
+    height: 50,
   },
 });
