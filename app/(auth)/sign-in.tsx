@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useAuth } from "../context/auth";
 import { Stack, useRouter } from "expo-router";
-import { useRef, useState } from "react";
+import { useRef, useState } from "react"
 
 export default function SignIn() {
   const { signIn } = useAuth();
@@ -22,7 +22,7 @@ export default function SignIn() {
     <>
       <Stack.Screen options={{ title: "sign up", headerShown: false }} />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Image source={require('../../assets/images/logo.png')} style={{width: 185, height: 80}} />
+      <Image source={require('../../assets/images/logo.png')} style={{width: 188, height: 85}} />
         <View style={{ marginTop: 32 }}>
           <Text
             style={{ fontWeight: "500", fontSize: 20 }}

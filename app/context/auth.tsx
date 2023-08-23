@@ -1,12 +1,11 @@
 import { useRootNavigation, useRouter, useSegments } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
-import { appwrite } from "../lib/appwrite-service";
 import { Models } from "appwrite";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Define the AuthContextValue interface
 interface SignInResponse {
-  data: Models.User<Models.Preferences> | undefined;
+  data: any | undefined;
   error: Error | undefined;
 }
 
@@ -15,11 +14,11 @@ interface SignOutResponse {
   data: {} | undefined;
 }
 
-interface AuthContextValue {º
+interface AuthContextValue {
   signIn: (e: string, p: string) => Promise<any>;
   signUp: (e: string, p: string, n: string) => Promise<SignInResponse>;
   signOut: () => Promise<SignOutResponse>;
-  user: Models.User<Models.Preferences> | null;
+  user: any | null;
   authInitialized: boolean;
 }
 
@@ -35,11 +34,11 @@ const AuthContext = React.createContext<AuthContextValue | undefined>(
 
 export function Provider(props: ProviderProps) {
   const [user, setAuth] =
-    React.useState<Models.User<Models.Preferences> | null>(null);
+    React.useState<Models.User<any> | null>(null);
   const [authInitialized, setAuthInitialized] = React.useState<boolean>(false);
 
   // This hook will protect the route access based on user authentication.
-  const useProtectedRoute = (user: Models.User<Models.Preferences> | null) => {
+  const useProtectedRoute = (user: any| null) => {
     const segments = useSegments();
     const router = useRouter();
 
@@ -162,42 +161,6 @@ export function Provider(props: ProviderProps) {
     }
   };
 
-  /**
-   * 
-   * @param email 
-   * @param password 
-   * @param username 
-   * @returns 
-   */
-  const createAcount = async (
-    email: string,
-    password: string,
-    username: string
-  ): Promise<SignInResponse> => {
-    try {
-      console.log(email, password, username);
-
-      // create the user
-      await appwrite.account.create(
-        appwrite.ID.unique(),
-        email,
-        password,
-        username
-      );
-
-      // create the session by logging in
-      await appwrite.account.createEmailSession(email, password);
-
-      // get Account information for the user
-      const user = await appwrite.account.get();
-      setAuth(user);
-      return { data: user, error: undefined };
-    } catch (error) {
-      setAuth(null);
-      return { error: error as Error, data: undefined };
-    }
-  };
-
   useProtectedRoute(user);
 
   return (
@@ -205,7 +168,6 @@ export function Provider(props: ProviderProps) {
       value={{
         signIn: login,
         signOut: logout,
-        signUp: createAcount,
         user,
         authInitialized,
       }}
