@@ -4,15 +4,17 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Image
+  Image,
+  Linking
 } from "react-native";
 import { useAuth } from "../context/auth";
 import { Stack, useRouter } from "expo-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function SignIn() {
   const { signIn } = useAuth();
   const router = useRouter();
+  const [isValid, setIsValid] = useState(false);
 
   const emailRef = useRef("");
   const passwordRef = useRef("");
@@ -20,8 +22,7 @@ export default function SignIn() {
     <>
       <Stack.Screen options={{ title: "sign up", headerShown: false }} />
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Image source={require('../../assets/images/logo.png')}
-       style={{width: 155, height: 70}} />
+      <Image source={require('../../assets/images/logo.png')} style={{width: 185, height: 80}} />
         <View style={{ marginTop: 32 }}>
           <Text
             style={{ fontWeight: "500", fontSize: 20 }}
@@ -65,6 +66,16 @@ export default function SignIn() {
           />
         </View>
 
+        {isValid ? (
+        <View style={{ marginTop: 5}} nativeID="error">
+        <Text
+          style={{ fontWeight: "500", color: "red" }}
+        >
+          Usuario o contraseña incorrectos
+        </Text>
+      </View>
+      ) : null}
+
         <TouchableOpacity
           onPress={async () => {
             const { data, error } = await signIn(
@@ -74,8 +85,7 @@ export default function SignIn() {
             if (data) {
               router.replace("/");
             } else {
-              console.log(error);
-              // Alert.alert("Login Error", resp.error?.message);
+              setIsValid(true);
             }
           }}
           style={styles.button}
@@ -86,6 +96,27 @@ export default function SignIn() {
           <Text
             style={{ fontWeight: "500" }}
             onPress={() => router.push("/sign-up")}
+          >
+            ¿No tienes una cuenta? Registrate
+          </Text>
+        </View>
+        <View style={styles.contact}>
+          <TouchableOpacity onPress={() => { Linking.openURL('https://twitter.com/LogisERP')}} style={{ marginTop: 30 }}>
+            <Image source={require('../../assets/images/twitter.png')} style={{width: 20, height: 20}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => { Linking.openURL('https://www.facebook.com/LogisERP')}} style={{ marginTop: 30 }}>
+            <Image source={require('../../assets/images/facebook.png')} style={{width: 20, height: 20}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => { Linking.openURL('https://www.youtube.com/channel/UCvNVc3ZO0eaDEr6V3Q1UvIg')}} style={{ marginTop: 30 }}>
+            <Image source={require('../../assets/images/youtube.png')} style={{width: 20, height: 20}}/>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => { Linking.openURL('https://api.whatsapp.com/send?phone=3229235880&text=Hola,%20deseo%20recibir%20m%C3%A1s%20informaci%C3%B3n%20de%20Logis')}} style={{ marginTop: 30 }}>
+            <Image source={require('../../assets/images/whatsapp.png')} style={{width: 20, height: 20}}/>
+          </TouchableOpacity>
+        </View>
+        <View style={{ marginTop: 20 }}>
+          <Text
+            style={{ fontWeight: "500" }}
           >
             © Logis ERP 2023
           </Text>
@@ -125,4 +156,10 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
   },
+  contact: {
+    width: 200,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  }
 });

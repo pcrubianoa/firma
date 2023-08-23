@@ -15,7 +15,7 @@ interface SignOutResponse {
   data: {} | undefined;
 }
 
-interface AuthContextValue {
+interface AuthContextValue {º
   signIn: (e: string, p: string) => Promise<any>;
   signUp: (e: string, p: string, n: string) => Promise<SignInResponse>;
   signOut: () => Promise<SignOutResponse>;
@@ -86,15 +86,16 @@ export function Provider(props: ProviderProps) {
       try {
         //const user = await appwrite.account.get();
         const user = await getData('user');
-        console.log(user);
+        //console.log(user);
         setAuth(user);
-        setAuthInitialized(true);
-        console.log("initialize ", user);
+        //setAuthInitialized(true);
+        //console.log("initialize ", user);
       } catch (error) {
-        console.log("error", error);
+        //console.log("error", error);
         setAuth(null);
+      } finally {
+        setAuthInitialized(true); // Mover esta línea al final
       }
-
       // setAuthInitialized(true);
       // console.log("initialize ", user);
     })();
@@ -126,8 +127,6 @@ export function Provider(props: ProviderProps) {
     password: string
   ): Promise<any> => {
     try {
-      console.log("[1] Validar Credenciales");
-      console.log(email, password);
       // validar credenciales
       const response = await fetch("https://api.logis.com.co/v1/secure", {
         method: 'POST',
