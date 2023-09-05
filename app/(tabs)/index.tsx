@@ -7,15 +7,14 @@ import { useAuth } from '../context/auth';
 
 
 export default function TabOneScreen() {
-  const { signOut, user } = useAuth();
+  console.log('TabOneScreen');
+  const { signOut } = useAuth();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Esperando documento para firmar</Text>
       <Text style={styles.subtitle}>Envia el documento a firmar desde Logis</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-<SignatureCapture></SignatureCapture>
       <Text onPress={() => signOut()}>Salir</Text>
-
     </View>
   );
 }

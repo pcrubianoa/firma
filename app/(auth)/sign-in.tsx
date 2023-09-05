@@ -25,10 +25,10 @@ export default function SignIn() {
       <Image source={require('../../assets/images/logo.png')} style={{width: 185, height: 80}} />
         <View style={{ marginTop: 32 }}>
           <Text
-            style={{ fontWeight: "500", fontSize: 20 }}
+            style={{ fontWeight: "700", fontSize: 24 }}
             onPress={() => router.push("/sign-up")}
           >
-            Logis Firma
+            Logis APK
           </Text>
         </View>
         <View style={{ marginTop: 10, marginBottom: 20 }}>
@@ -69,7 +69,7 @@ export default function SignIn() {
         {isValid ? (
         <View style={{ marginTop: 5}} nativeID="error">
         <Text
-          style={{ fontWeight: "500", color: "red" }}
+          style={{ fontSize: 16, fontWeight: "900", color: "red" }}
         >
           Usuario o contraseña incorrectos
         </Text>
@@ -118,7 +118,7 @@ export default function SignIn() {
           <Text
             style={{ fontWeight: "500" }}
           >
-            © Logis ERP 2023
+            Logis ERP © 2023
           </Text>
         </View>
       </View>
