@@ -33,10 +33,8 @@ const AuthContext = React.createContext<AuthContextValue | undefined>(
 );
 
 export function Provider(props: ProviderProps) {
-  const [user, setAuth] =
-    React.useState<Models.User<any> | null>(null);
-  const [authInitialized, setAuthInitialized] = React.useState<boolean>(false);
-
+  const [user, setAuth] = React.useState(null);
+  const [authInitialized, setAuthInitialized] = React.useState(false);
   // This hook will protect the route access based on user authentication.
   const useProtectedRoute = (user: any| null) => {
     const segments = useSegments();
@@ -86,7 +84,13 @@ export function Provider(props: ProviderProps) {
         //const user = await appwrite.account.get();
         const user = await getData('user');
         //console.log(user);
-        setAuth(user);
+        if(user != null) {
+          setAuthInitialized(true);
+          setAuth(user);
+        } else {
+          setAuthInitialized(false);
+          setAuth(null);
+        }
         //setAuthInitialized(true);
         //console.log("initialize ", user);
       } catch (error) {

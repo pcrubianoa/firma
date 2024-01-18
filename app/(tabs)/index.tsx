@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
@@ -6,37 +5,15 @@ import SignatureCapture from '@/components/SignatureCapture';
 import { Text, View } from '@/components/Themed';
 import { useAuth } from '../context/auth';
 
-import * as SQLite from 'expo-sqlite';
-
-import {getDbConnection, initDatabase, insertTask} from '../lib/db';
 
 export default function TabOneScreen() {
-  const { signOut, user } = useAuth();
-  useEffect(function() {
-    async function init() {
-      await initDatabase();
-    }
-    init();
-  }, []);
-
-async function createTask() {
-  console.log("Guardar Tarea");
-  try {
-    const db = await getDbConnection();
-    await insertTask(db, "Primera Tarea");
-  } catch (e){
-
-  }
-}
-
+  const { signOut } = useAuth();
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Esperando documento para firmar</Text>
       <Text style={styles.subtitle}>Envia el documento a firmar desde Logis</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-
-      <Text onPress={() => createTask()}>Salir</Text>
-
+      <Text onPress={() => signOut()}>Salir</Text>
     </View>
   );
 }
